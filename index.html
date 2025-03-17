@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <title>Meu Portfólio</title>
+    <style>
+        :root {
+            --trump-red: #e40000;
+            --trump-blue: #002868;
+            --trump-white: #ffffff;
+            --trump-light-blue: #a7c6f2;
+            --trump-light-red: #ffcccb;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
+            background-image: url('data:image/svg+xml;charset=utf8,%3Csvg xmlns="http://www.w3.org/2000/svg" width="1000" height="600" viewBox="0 0 1000 600"%3E%3Crect width="1000" height="600" fill="%23bf0a30" /%3E%3Cg fill="%23ffffff"%3E%3Crect y="46.15" width="1000" height="46.15" /%3E%3Crect y="138.45" width="1000" height="46.15" /%3E%3Crect y="230.75" width="1000" height="46.15" /%3E%3Crect y="323.05" width="1000" height="46.15" /%3E%3Crect y="415.35" width="1000" height="46.15" /%3E%3Crect y="507.65" width="1000" height="46.15" /%3E%3C/g%3E%3Crect width="400" height="323.05" fill="%23002868" /%3E%3Cg fill="%23ffffff"%3E%3C/g%3E%3C/svg%3E');
+            background-attachment: fixed;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.85);
+            z-index: -1;
+        }
+
+        .bg-trump-red {
+            background-color: var(--trump-red);
+        }
+
+        .bg-trump-blue {
+            background-color: var(--trump-blue);
+        }
+
+        .text-trump-red {
+            color: var(--trump-red);
+        }
+
+        .text-trump-blue {
+            color: var(--trump-blue);
+        }
+
+        .btn-trump {
+            background-color: var(--trump-red);
+            color: white;
+            border: none;
+        }
+
+        .btn-trump:hover {
+            background-color: #b30000;
+            color: white;
+        }
+
+        .trump-badge {
+            background-color: var(--trump-blue);
+            color: white;
+            font-weight: bold;
+        }
+
+        header {
+            background: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), 
+                        linear-gradient(90deg, var(--trump-light-red), var(--trump-white), var(--trump-light-blue));
+            background-size: cover;
+            background-position: center;
+            padding: 2rem 0;
+            border-bottom: 5px solid var(--trump-red);
+            position: relative;
+        }
+
+        .card {
+            border: 2px solid var(--trump-blue);
+            transition: transform 0.3s;
+            background-color: rgba(255, 255, 255, 0.9);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            color: var(--trump-red);
+            font-weight: bold;
+        }
+
+        footer {
+            background-color: var(--trump-blue);
+            color: white;
+            border-top: 5px solid var(--trump-red);
+            position: relative;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: var(--trump-light-red);
+            text-decoration: underline;
+        }
+
+        .social-icon {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--trump-red), var(--trump-blue));
+        }
+
+        .modal-header {
+            background-color: var(--trump-blue);
+            color: white;
+        }
+
+        .modal-footer {
+            background-color: #f8f9fa;
+        }
+
+        .star-badge {
+            display: inline-block;
+            color: var(--trump-red);
+            margin: 0 2px;
+        }
+
+        /* Star Animation Button */
+        .star-btn {
+            position: relative;
+            overflow: visible;
+            background: linear-gradient(45deg, var(--trump-red), var(--trump-blue));
+            color: white;
+            font-weight: bold;
+            padding: 12px 24px;
+            border-radius: 30px;
+            border: 2px solid var(--trump-white);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            z-index: 1;
+        }
+
+        .star-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .star-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Stars */
+        .star {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 51 48'%3E%3Cpath fill='%23ffffff' d='m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .star-red {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 51 48'%3E%3Cpath fill='%23e40000' d='m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z'/%3E%3C/svg%3E");
+        }
+        
+        .star-blue {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 51 48'%3E%3Cpath fill='%23002868' d='m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z'/%3E%3C/svg%3E");
+        }
+
+        .star-container {
+            position: relative;
+            margin: 20px auto;
+            width: 100%;
+            text-align: center;
+            z-index: 1;
+        }
+
+        /* Profile image styling */
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid var(--trump-red);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* American flag stars for background enhancement */
+        .flag-star {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 51 48'%3E%3Cpath fill='%23ffffff' d='m25,1 6,17h18l-14,11 5,17-15-10-15,10 5-17-14-11h18z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            z-index: 0;
+        }
+
+        @keyframes fly-away {
+            0% {
+                transform: translate(0, 0) rotate(0) scale(0.5);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) rotate(var(--r)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        @media (prefers-color-scheme: dark) {
+            body {
+                background-color: #181818;
+                color: white;
+            }
+            
+            body::before {
+                background-color: rgba(24, 24, 24, 0.85);
+            }
+            
+            header {
+                background: linear-gradient(rgba(24, 24, 24, 0.9), rgba(24, 24, 24, 0.9)), 
+                            linear-gradient(90deg, var(--trump-red), var(--trump-blue));
+            }
+            
+            .card {
+                background-color: rgba(33, 33, 33, 0.9);
+                color: white;
+            }
+            
+            .modal-content {
+                background-color: #212121;
+                color: white;
+            }
+            
+            .modal-footer {
+                background-color: #2a2a2a;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="container text-center py-5">
+        <div class="avatar-container mb-3">
+            <img src="https://media.tenor.com/nx1Io9fXD_kAAAAe/trump-trump-mewing.png" alt="Donald Trump" class="profile-image">
+        </div>
+        <p class="lead fw-bold text-trump-red">Eu sou Donald Trump</p>
+        <h1 class="display-4 fw-bold text-trump-blue">Eu ensino como vencer!</h1>
+        <div class="py-2">
+            <i class="bi bi-star-fill star-badge"></i>
+            <i class="bi bi-star-fill star-badge"></i>
+            <i class="bi bi-star-fill star-badge"></i>
+            <i class="bi bi-star-fill star-badge"></i>
+            <i class="bi bi-star-fill star-badge"></i>
+        </div>
+        <p class="col-md-8 mx-auto">Sou um magnata dos negócios, 45º presidente dos Estados Unidos e posso ajudar você a alcançar o sucesso. 
+           Juntos construiremos um futuro brilhante para todos os americanos. Confira meus projetos extraordinários!</p>
+        
+        <div class="star-container">
+            <button id="star-button" class="star-btn">
+                <i class="bi bi-stars me-2"></i>Make America Great Again!
+            </button>
+        </div>
+        
+        <p class="fw-bold mt-4 mb-2">Minhas habilidades</p>
+        <div>
+            <span class="badge trump-badge m-1">Liderança</span>
+            <span class="badge trump-badge m-1">Publicidade</span>
+            <span class="badge trump-badge m-1">Negócios</span>
+            <span class="badge trump-badge m-1">Estratégia</span>
+            <span class="badge trump-badge m-1">Política</span>
+            <span class="badge trump-badge m-1">Imóveis</span>
+        </div>
+    </header>
+    
+    <main class="container my-5">
+        <h2 class="section-title text-center text-trump-blue">Meus projetos</h2>
+        <div class="row g-4">
+            <!-- Projeto 1 -->
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-img-top d-flex justify-content-center align-items-center bg-trump-light-blue" style="height: 200px;">
+                        <i class="bi bi-graph-up-arrow text-trump-blue" style="font-size: 4rem;"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Fazendo a América Grande Novamente</h5>
+                        <p class="card-text">Projeto completo de revitalização econômica que beneficia todos os americanos. 
+                        Redução de impostos, desregulamentação, melhores acordos comerciais e forte suporte à indústria nacional.</p>
+                        <button type="button" class="btn btn-trump" data-bs-toggle="modal" data-bs-target="#modal1">
+                            <i class="bi bi-info-circle-fill me-1"></i> Veja o projeto
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Projeto 2 -->
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-img-top d-flex justify-content-center align-items-center bg-trump-light-blue" style="height: 200px;">
+                        <i class="bi bi-briefcase-fill text-trump-blue" style="font-size: 4rem;"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Empregos Americanos Primeiro</h5>
+                        <p class="card-text">Estratégia abrangente para criar milhões de empregos através de iniciativas "America First". 
+                        Apoio às pequenas empresas, incentivo à manufatura local e repatriação de empregos da China.</p>
+                        <button type="button" class="btn btn-trump" data-bs-toggle="modal" data-bs-target="#modal2">
+                            <i class="bi bi-info-circle-fill me-1"></i> Veja o projeto
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projeto 3 -->
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-img-top d-flex justify-content-center align-items-center bg-trump-light-blue" style="height: 200px;">
+                        <i class="bi bi-shield-fill-check text-trump-blue" style="font-size: 4rem;"></i>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Fronteiras Seguras, América Segura</h5>
+                        <p class="card-text">Plano abrangente de segurança nacional com políticas migratórias eficazes. 
+                        Construção completa do muro na fronteira sul e implementação de um sistema de imigração baseado em mérito.</p>
+                        <button type="button" class="btn btn-trump" data-bs-toggle="modal" data-bs-target="#modal3">
+                            <i class="bi bi-info-circle-fill me-1"></i> Veja o projeto
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal 1 -->
+    <div class="modal fade" id="modal1" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Fazendo a América Grande Novamente</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-center align-items-center bg-trump-light-blue mb-4 p-5" style="height: 200px;">
+                        <i class="bi bi-graph-up-arrow text-trump-blue" style="font-size: 5rem;"></i>
+                    </div>
+                    
+                    <h4 class="text-trump-red mb-3">Visão Geral</h4>
+                    <p>O plano "Make America Great Again" é baseado em políticas econômicas comprovadas durante meu mandato como presidente. Vamos revitalizar a economia americana através de:</p>
+                    
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-trump-red me-2"></i> Cortes de impostos históricos para a classe média e empresas</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-trump-red me-2"></i> Eliminação de regulamentações desnecessárias que sufocam o crescimento</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-trump-red me-2"></i> Renegociação de acordos comerciais para beneficiar os trabalhadores americanos</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-trump-red me-2"></i> Independência energética e dominância americana no setor energético global</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-trump-red me-2"></i> Incentivos para empresas manterem sua produção em solo americano</li>
+                    </ul>
+                    
+                    <p>Durante meu primeiro mandato, estas políticas resultaram em uma das economias mais fortes da história americana, com crescimento recorde, desemprego em mínimas históricas e um mercado de ações em constante alta.</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="https://exemplo.com/projeto1" class="btn btn-trump" target="_blank">
+                        <i class="bi bi-link-45deg me-1"></i> Ver projeto completo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal 2 -->
+    <div class="modal fade" id="modal2" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Empregos Americanos Primeiro</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-center align-items-center bg-trump-light-blue mb-4 p-5" style="height: 200px;">
+                        <i class="bi bi-briefcase-fill text-trump-blue" style="font-size: 5rem;"></i>
+                    </div>
+                    
+                    <h4 class="text-trump-red mb-3">Visão Geral</h4>
+                    <p>Meu plano "Empregos Americanos Primeiro" criará milhões de novos empregos bem remunerados e trará de volta aqueles que foram enviados ao exterior. Este plano completo prioriza os trabalhadores americanos através de:</p>
+                    
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-trump-red me-2"></i> Incentivos fiscais substanciais para empresas que criam empregos nos EUA</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-trump-red me-2"></i> Tarifas estratégicas em produtos estrangeiros para proteger nossas indústrias nacionais</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-trump-red me-2"></i> Expansão da manufatura americana em setores vitais e estratégicos</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-trump-red me-2"></i> Investimentos massivos em infraestrutura para criar empregos bem remunerados</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-trump-red me-2"></i> Revitalização de indústrias e comunidades abandonadas por administrações anteriores</li>
+                    </ul>
+                    
+                    <p>Durante minha presidência, a taxa de desemprego atingiu níveis historicamente baixos e os salários aumentaram significativamente pela primeira vez em décadas. Este plano vai recuperar e expandir esse sucesso econômico sem precedentes.</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="https://exemplo.com/projeto2" class="btn btn-trump" target="_blank">
+                        <i class="bi bi-link-45deg me-1"></i> Ver projeto completo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div class="modal fade" id="modal3" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Fronteiras Seguras, América Segura</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex justify-content-center align-items-center bg-trump-light-blue mb-4 p-5" style="height: 200px;">
+                        <i class="bi bi-shield-fill-check text-trump-blue" style="font-size: 5rem;"></i>
+                    </div>
+                    
+                    <h4 class="text-trump-red mb-3">Visão Geral</h4>
+                    <p>Meu plano de segurança nacional "Fronteiras Seguras, América Segura" fundamenta-se no princípio essencial de que um país sem fronteiras simplesmente não é um país. Este plano abrangente e eficaz inclui:</p>
+                    
+                    <ul class="list-group list-group-flush mb-4">
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-trump-red me-2"></i> Construção completa do muro na fronteira sul para deter efetivamente a imigração ilegal</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-trump-red me-2"></i> Fim imediato das políticas de "captura e soltura" que comprometem nossa segurança nacional</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-trump-red me-2"></i> Implementação rigorosa de um sistema de imigração baseado inteiramente no mérito</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-trump-red me-2"></i> Fortalecimento significativo dos órgãos de patrulha e controle de fronteira</li>
+                        <li class="list-group-item"><i class="bi bi-check-circle-fill text-trump-red me-2"></i> Acordos estratégicos com governos estrangeiros para reduzir drasticamente o fluxo migratório</li>
+                    </ul>
+                    
+                    <p>Durante minha administração, as travessias ilegais de fronteira diminuíram a níveis recordes. Este plano ambicioso restaurará essas políticas comprovadas e expandirá seus benefícios para garantir a segurança e prosperidade de todos os americanos.</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="https://exemplo.com/projeto3" class="btn btn-trump" target="_blank">
+                        <i class="bi bi-link-45deg me-1"></i> Ver projeto completo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="py-5 text-center">
+        <div class="container">
+            <h2 class="text-white mb-4">Entre em contato</h2>
+            <div class="row justify-content-center mb-4">
+                <div class="col-md-6">
+                    <div class="d-flex justify-content-center gap-4">
+                        <a href="#" class="text-decoration-none">
+                            <i class="bi bi-twitter-x social-icon"></i>
+                        </a>
+                        <a href="#" class="text-decoration-none">
+                            <i class="bi bi-facebook social-icon"></i>
+                        </a>
+                        <a href="#" class="text-decoration-none">
+                            <i class="bi bi-instagram social-icon"></i>
+                        </a>
+                        <a href="#" class="text-decoration-none">
+                            <i class="bi bi-envelope-fill social-icon"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="py-2 mb-3">
+                <span class="badge bg-trump-red mx-1 p-2">TRUMP</span>
+                <span class="badge bg-trump-blue mx-1 p-2">2024</span>
+            </div>
+            <p class="mt-4">© Copyright 2024. Produzido por Donald J. Trump</p>
+            <div class="mt-2">
+                <i class="bi bi-flag-fill text-white me-2"></i>
+                <span class="text-white fw-bold">Make America Great Again!</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check for dark mode preference
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.classList.add('dark');
+            }
+            
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
+                if (event.matches) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            });
+            
+            const starButton = document.getElementById('star-button');
+            const starContainer = document.querySelector('.star-container');
+            
+            // Add American flag stars to the background
+            addBackgroundStars();
+            
+            starButton.addEventListener('click', function(e) {
+                // Create and animate stars
+                createStars(e);
+                
+                // Add a little bounce to the button
+                starButton.classList.add('animate__animated', 'animate__rubberBand');
+                setTimeout(() => {
+                    starButton.classList.remove('animate__animated', 'animate__rubberBand');
+                }, 1000);
+            });
+            
+            function createStars(e) {
+                // Get button position relative to viewport
+                const buttonRect = starButton.getBoundingClientRect();
+                const centerX = buttonRect.left + buttonRect.width / 2;
+                const centerY = buttonRect.top + buttonRect.height / 2;
+                
+                // Number of stars to create
+                const numberOfStars = 30;
+                
+                for (let i = 0; i < numberOfStars; i++) {
+                    // Create a star element
+                    const star = document.createElement('div');
+                    star.className = 'star';
+                    
+                    // Randomize star color (white, red, or blue)
+                    const colorRandom = Math.random();
+                    if (colorRandom < 0.33) {
+                        star.classList.add('star-red');
+                    } else if (colorRandom < 0.66) {
+                        star.classList.add('star-blue');
+                    }
+                    
+                    // Randomize star size
+                    const size = 10 + Math.random() * 20;
+                    star.style.width = `${size}px`;
+                    star.style.height = `${size}px`;
+                    
+                    // Set initial position to the center of the button
+                    star.style.left = `${centerX}px`;
+                    star.style.top = `${centerY}px`;
+                    
+                    // Set animation properties
+                    const angle = Math.random() * Math.PI * 2; // Random angle in radians
+                    const distance = 50 + Math.random() * 150; // Random distance
+                    const tx = Math.cos(angle) * distance;
+                    const ty = Math.sin(angle) * distance;
+                    const rotation = -360 + Math.random() * 720; // Random rotation between -360 and 360 degrees
+                    
+                    star.style.setProperty('--tx', `${tx}px`);
+                    star.style.setProperty('--ty', `${ty}px`);
+                    star.style.setProperty('--r', `${rotation}deg`);
+                    
+                    // Set animation duration
+                    const duration = 0.5 + Math.random() * 1; // Between 0.5 and 1.5 seconds
+                    star.style.animation = `fly-away ${duration}s forwards`;
+                    
+                    // Append to body (not inside the button)
+                    document.body.appendChild(star);
+                    
+                    // Remove star after animation completes
+                    setTimeout(() => {
+                        star.remove();
+                    }, duration * 1000);
+                }
+            }
+            
+            function addBackgroundStars() {
+                // Add stars to the American flag background (in blue section)
+                const numberOfStars = 50;
+                
+                for (let i = 0; i < numberOfStars; i++) {
+                    const star = document.createElement('div');
+                    star.className = 'flag-star';
+                    
+                    // Random position within the window
+                    star.style.position = 'fixed';
+                    star.style.left = `${Math.random() * 30}%`;
+                    star.style.top = `${Math.random() * 30}%`;
+                    
+                    // Random size (smaller for background stars)
+                    const size = 5 + Math.random() * 15;
+                    star.style.width = `${size}px`;
+                    star.style.height = `${size}px`;
+                    
+                    // Random opacity
+                    star.style.opacity = 0.3 + Math.random() * 0.5;
+                    
+                    // Append to body
+                    document.body.appendChild(star);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
